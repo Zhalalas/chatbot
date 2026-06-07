@@ -1,19 +1,25 @@
-🧠 Local RAG Chatbot with Ollama
+# 🧠 Local RAG Chatbot with Ollama
 
 A lightweight Retrieval-Augmented Generation (RAG) chatbot built entirely in Python using Ollama, local embeddings, and vector similarity search.
 
-This project demonstrates the core concepts behind modern AI assistants such as ChatGPT, Perplexity, and enterprise knowledge bots—without requiring external vector databases or cloud APIs.
+---
 
-✨ Features
-🔍 Semantic search using embedding vectors
-🧠 Retrieval-Augmented Generation (RAG)
-📚 Local knowledge base from text files
-⚡ Fast cosine similarity retrieval
-🏠 Fully local execution with Ollama
-🔒 No external API keys required
-🌊 Streaming LLM responses
-🐍 Pure Python implementation
-🏗️ Architecture
+## ✨ Features
+
+* 🔍 Semantic search using embedding vectors
+* 🧠 Retrieval-Augmented Generation (RAG)
+* 📚 Local knowledge base from text files
+* ⚡ Fast cosine similarity retrieval
+* 🏠 Fully local execution with Ollama
+* 🔒 No external API keys required
+* 🌊 Streaming LLM responses
+* 🐍 Pure Python implementation
+
+---
+
+## 🏗️ Architecture
+
+```text
 User Question
       │
       ▼
@@ -33,114 +39,93 @@ Generate Answer Using LLM
       │
       ▼
 Stream Response To User
-📂 Project Structure
+```
+
+---
+
+## 📂 Project Structure
+
+```text
 .
 ├── chatbot.py
 ├── cat-facts.txt
 ├── README.md
 └── requirements.txt
-🚀 Models Used
-Embedding Model
+```
+
+---
+
+## 🚀 Models Used
+
+### Embedding Model
+
+```python
 hf.co/CompendiumLabs/bge-base-en-v1.5-gguf
+```
 
-Used to convert text chunks and user queries into vector embeddings.
+### Language Model
 
-Language Model
+```python
 hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF
+```
 
-Used to generate responses based on retrieved context.
+---
 
-⚙️ Installation
-1. Install Ollama
+## ⚙️ Installation
 
-Download and install Ollama:
+### Install Ollama
 
-https://ollama.com
-
-Verify installation:
-
+```bash
 ollama --version
-2. Pull Required Models
+```
+
+### Pull Required Models
+
+```bash
 ollama pull hf.co/CompendiumLabs/bge-base-en-v1.5-gguf
+```
+
+```bash
 ollama pull hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF
-3. Install Python Dependencies
+```
+
+### Install Dependencies
+
+```bash
 pip install ollama
-📖 Knowledge Base
+```
 
-The chatbot loads information from:
+---
 
-cat-facts.txt
+## 📖 Example Usage
 
-Each line is treated as a separate knowledge chunk.
-
-Example:
-
-Cats sleep for around 13–16 hours a day.
-A group of kittens is called a kindle.
-Cats can rotate their ears 180 degrees.
-🧮 Vector Database
-
-For simplicity, embeddings are stored in memory:
-
-VECTOR_DB = [
-    (chunk, embedding),
-    ...
-]
-
-This makes the project easy to understand while demonstrating the core mechanics of semantic retrieval.
-
-🔍 Retrieval Process
-
-When a user asks a question:
-
-Generate an embedding for the query
-Compute cosine similarity against all stored embeddings
-Rank chunks by similarity score
-Retrieve the top matching results
-Inject them into the prompt
-
-Example:
-
-Question:
-Why do cats sleep so much?
-
-Retrieved Context:
-- Cats sleep for around 13–16 hours a day.
-- Cats conserve energy because they are natural predators.
-💬 Example Usage
+```bash
 python chatbot.py
+```
 
-Output:
+Example:
 
+```text
 Ask me a question:
 Why do cats sleep so much?
 
 Retrieved knowledge:
-- (similarity: 0.91) Cats sleep for around 13–16 hours a day.
-- (similarity: 0.84) Cats conserve energy because they are predators.
+- Cats sleep for around 13–16 hours a day.
 
 Chatbot response:
-Cats sleep for around 13–16 hours a day and conserve energy because they are natural predators.
-🧠 Why RAG?
+Cats sleep for around 13–16 hours a day because...
+```
 
-Traditional LLMs:
+---
 
-Question → LLM → Answer
+## 🧠 How It Works
 
-RAG Systems:
+1. Load text data from a local file
+2. Generate embeddings for every chunk
+3. Store embeddings in an in-memory vector database
+4. Convert the user query into an embedding
+5. Compute cosine similarity scores
+6. Retrieve the most relevant chunks
+7. Send retrieved context to the LLM
+8. Stream the generated response
 
-Question
-    ↓
-Retrieve Relevant Knowledge
-    ↓
-Provide Context
-    ↓
-LLM Generates Answer
-
-Benefits:
-
-More accurate answers
-Uses custom/private data
-Reduces hallucinations
-Keeps knowledge up to date
-No retraining required
